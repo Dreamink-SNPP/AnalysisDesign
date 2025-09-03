@@ -1,0 +1,41 @@
+@startuml Caso de Uso Tratamiento
+
+skin rose
+left to right direction
+
+title Tratamiento básico
+
+:Guionista: as g
+
+rectangle Tratamiento <<Subsystem>> {
+    (Título) as u_tit
+    (Género) as u_gen
+    (Idea) as u_ide
+    (Logline) as u_log
+    (Storyline) as u_sto
+
+    (Sinopsis) as u_sin
+    (Sinopsis Corta) as u_sic
+    (Sinopsis Larga) as u_sil
+
+    u_sin ..> u_sic : <<include>>
+    u_sin ..> u_sil : <<include>>
+
+    (Mundo) as u_mun
+    (Motor de la Historia) as u_moh
+    (Temas) as u_tem
+    (Tono) as u_ton
+}
+
+g --> u_tit
+g --> u_gen
+g --> u_ide
+g --> u_log
+g --> u_sto
+g --> u_sin
+g --> u_mun
+g --> u_moh
+g --> u_tem
+g --> u_ton
+
+@enduml
