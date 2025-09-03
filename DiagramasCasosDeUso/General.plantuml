@@ -1,0 +1,31 @@
+@startuml Caso de Uso General
+
+skin rose
+left to right direction
+
+title Caso de Uso General
+
+actor Guionista as g
+
+rectangle Dreamink <<Service>> {
+    (Tratamiento) as u_t
+    (Estructura) as u_e
+    (Personajes) as u_p
+    (Locaciones) as u_l
+    (Ideas) as u_i
+    (Documentación) as u_help
+}
+
+g --> u_t
+g --> u_e
+g --> u_p
+g --> u_l
+g --> u_i
+
+u_t ..> u_help : <<extends>>
+u_e ..> u_help : <<extends>>
+u_p ..> u_help : <<extends>>
+u_l ..> u_help : <<extends>>
+u_i ..> u_help : <<extends>>
+
+@enduml
