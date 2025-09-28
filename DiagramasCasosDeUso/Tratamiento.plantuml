@@ -1,41 +1,54 @@
-@startuml Caso de Uso Tratamiento
-
+@startuml Gestion_Tratamiento
+title Diagrama de Casos de Uso - Gestión de Tratamiento
 skin rose
+
 left to right direction
+skinparam packageStyle rectangle
 
-title Tratamiento básico
+actor "Usuario" as User
 
-:Guionista: as g
-
-rectangle Tratamiento <<Subsystem>> {
-    (Título) as u_tit
-    (Género) as u_gen
-    (Idea) as u_ide
-    (Logline) as u_log
-    (Storyline) as u_sto
-
-    (Sinopsis) as u_sin
-    (Sinopsis Corta) as u_sic
-    (Sinopsis Larga) as u_sil
-
-    u_sin ..> u_sic : <<include>>
-    u_sin ..> u_sil : <<include>>
-
-    (Mundo) as u_mun
-    (Motor de la Historia) as u_moh
-    (Temas) as u_tem
-    (Tono) as u_ton
+rectangle "Módulo de Tratamiento" {
+    usecase "Crear Tratamiento" as UCT1
+    usecase "Editar Título" as UCT2
+    usecase "Definir Género" as UCT3
+    usecase "Escribir Idea" as UCT4
+    usecase "Crear Logline" as UCT5
+    usecase "Desarrollar Storyline" as UCT6
+    usecase "Escribir Sinopsis Corta" as UCT7
+    usecase "Escribir Sinopsis Larga" as UCT8
+    usecase "Describir Mundo" as UCT9
+    usecase "Resumir Personajes" as UCT10
+    usecase "Definir Motor de Historia" as UCT11
+    usecase "Establecer Temas" as UCT12
+    usecase "Definir Tono" as UCT13
+    usecase "Estructurar Actos" as UCT14
+    usecase "Describir Secuencias" as UCT15
+    usecase "Visualizar Tratamiento" as UCT16
 }
 
-g --> u_tit
-g --> u_gen
-g --> u_ide
-g --> u_log
-g --> u_sto
-g --> u_sin
-g --> u_mun
-g --> u_moh
-g --> u_tem
-g --> u_ton
+User --> UCT1
+User --> UCT2
+User --> UCT3
+User --> UCT4
+User --> UCT5
+User --> UCT6
+User --> UCT7
+User --> UCT8
+User --> UCT9
+User --> UCT10
+User --> UCT11
+User --> UCT12
+User --> UCT13
+User --> UCT14
+User --> UCT15
+User --> UCT16
+
+' Include relationships
+UCT1 ..> UCT2 : <<include>>
+UCT14 ..> UCT15 : <<include>>
+
+' Generalization
+UCT7 --|> UCT6
+UCT8 --|> UCT7
 
 @enduml
