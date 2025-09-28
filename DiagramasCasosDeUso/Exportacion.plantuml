@@ -1,0 +1,43 @@
+@startuml Proceso_Exportacion
+title Diagrama de Casos de Uso - Proceso de Exportación
+skin rose
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Usuario Creativo" as User
+actor "Sistema" as System
+
+rectangle "Módulo de Exportación" {
+    usecase "Solicitar Exportación" as UCX1
+    usecase "Seleccionar Proyecto" as UCX2
+    usecase "Validar Completitud" as UCX3
+    usecase "Generar Fountain" as UCX4
+    usecase "Formatear Tratamiento" as UCX5
+    usecase "Formatear Estructura" as UCX6
+    usecase "Formatear Personajes" as UCX7
+    usecase "Formatear Locaciones" as UCX8
+    usecase "Compilar Documento" as UCX9
+    usecase "Descargar Archivo" as UCX10
+}
+
+User --> UCX1
+User --> UCX2
+User --> UCX10
+
+System --> UCX3
+System --> UCX4
+System --> UCX9
+
+' Include relationships
+UCX1 ..> UCX2 : <<include>>
+UCX2 ..> UCX3 : <<include>>
+UCX3 ..> UCX4 : <<include>>
+UCX4 ..> UCX5 : <<include>>
+UCX4 ..> UCX6 : <<include>>
+UCX4 ..> UCX7 : <<include>>
+UCX4 ..> UCX8 : <<include>>
+UCX4 ..> UCX9 : <<include>>
+UCX9 ..> UCX10 : <<include>>
+
+@enduml
