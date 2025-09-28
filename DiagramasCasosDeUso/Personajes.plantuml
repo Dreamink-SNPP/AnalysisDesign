@@ -1,0 +1,56 @@
+@startuml Gestion_Personajes
+title Diagrama de Casos de Uso - Gestión de Fichas de Personajes
+skin rose
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Usuario" as User
+
+rectangle "Módulo de Personajes" {
+    usecase "Crear Personaje" as UCP1
+    usecase "Listar Personajes" as UCP2
+    usecase "Ver Ficha Completa" as UCP3
+    usecase "Editar Personaje" as UCP4
+    usecase "Eliminar Personaje" as UCP5
+    usecase "Buscar Personaje" as UCP6
+
+    ' Características Internas
+    usecase "Definir Caract. Internas" as UCP7
+    usecase "Establecer Habilidades" as UCP8
+    usecase "Definir Creencias" as UCP9
+    usecase "Establecer Motivación" as UCP10
+    usecase "Definir Valores" as UCP11
+
+    ' Características Externas
+    usecase "Definir Caract. Externas" as UCP12
+    usecase "Describir Apariencia" as UCP13
+    usecase "Definir Historia Familiar" as UCP14
+    usecase "Establecer Situación Económica" as UCP15
+    usecase "Definir Residencia" as UCP16
+}
+
+User --> UCP1
+User --> UCP2
+User --> UCP3
+User --> UCP4
+User --> UCP5
+User --> UCP6
+
+' Include relationships
+UCP1 ..> UCP7 : <<include>>
+UCP1 ..> UCP12 : <<include>>
+UCP7 ..> UCP8 : <<include>>
+UCP7 ..> UCP9 : <<include>>
+UCP7 ..> UCP10 : <<include>>
+UCP7 ..> UCP11 : <<include>>
+UCP12 ..> UCP13 : <<include>>
+UCP12 ..> UCP14 : <<include>>
+UCP12 ..> UCP15 : <<include>>
+UCP12 ..> UCP16 : <<include>>
+
+' Extend relationships
+UCP4 <.. UCP7 : <<extend>>
+UCP4 <.. UCP12 : <<extend>>
+
+@enduml
