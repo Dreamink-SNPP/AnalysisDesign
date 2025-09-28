@@ -1,0 +1,50 @@
+@startuml Gestion_Locaciones_Ideas
+title Diagrama de Casos de Uso - Gestión de Locaciones e Ideas
+skin rose
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Usuario" as User
+
+rectangle "Módulo de Locaciones" {
+    usecase "Crear Locación" as UCL1
+    usecase "Listar Locaciones" as UCL2
+    usecase "Editar Locación" as UCL3
+    usecase "Eliminar Locación" as UCL4
+    usecase "Buscar Locación" as UCL5
+    usecase "Ver Uso en Escenas" as UCL6
+}
+
+rectangle "Módulo de Ideas" {
+    usecase "Crear Idea" as UCI1
+    usecase "Listar Ideas" as UCI2
+    usecase "Editar Idea" as UCI3
+    usecase "Eliminar Idea" as UCI4
+    usecase "Buscar Idea" as UCI5
+    usecase "Marcar como Utilizada" as UCI6
+    usecase "Filtrar por Estado" as UCI7
+}
+
+' Relaciones Locaciones
+User --> UCL1
+User --> UCL2
+User --> UCL3
+User --> UCL4
+User --> UCL5
+User --> UCL6
+
+' Relaciones Ideas
+User --> UCI1
+User --> UCI2
+User --> UCI3
+User --> UCI4
+User --> UCI5
+User --> UCI6
+User --> UCI7
+
+' Extend relationships
+UCL4 <.. UCL6 : <<extend>>
+UCI2 <.. UCI7 : <<extend>>
+
+@enduml
