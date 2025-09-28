@@ -1,0 +1,45 @@
+@startuml Gestion_Estructura
+title Diagrama de Casos de Uso - Gestión de Estructura (Tablero)
+skin rose
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Usuario" as User
+
+rectangle "Módulo de Estructura" {
+    usecase "Visualizar Tablero" as UCE1
+    usecase "Crear Escena" as UCE2
+    usecase "Editar Escena" as UCE3
+    usecase "Eliminar Escena" as UCE4
+    usecase "Mover Escena" as UCE5
+    usecase "Asignar a Acto" as UCE6
+    usecase "Asignar a Secuencia" as UCE7
+    usecase "Vincular Locación" as UCE8
+    usecase "Vincular Personajes" as UCE9
+    usecase "Definir Duración" as UCE10
+    usecase "Reordenar Escenas" as UCE11
+    usecase "Validar Estructura" as UCE12
+}
+
+User --> UCE1
+User --> UCE2
+User --> UCE3
+User --> UCE4
+User --> UCE5
+User --> UCE11
+
+' Include relationships
+UCE2 ..> UCE6 : <<include>>
+UCE2 ..> UCE7 : <<include>>
+UCE2 ..> UCE8 : <<include>>
+UCE2 ..> UCE9 : <<include>>
+UCE2 ..> UCE10 : <<include>>
+UCE5 ..> UCE11 : <<include>>
+UCE11 ..> UCE12 : <<include>>
+
+' Extend relationships
+UCE3 <.. UCE8 : <<extend>>
+UCE3 <.. UCE9 : <<extend>>
+
+@enduml
