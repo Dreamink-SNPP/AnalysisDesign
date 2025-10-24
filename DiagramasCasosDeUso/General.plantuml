@@ -8,7 +8,6 @@ left to right direction
 skinparam packageStyle rectangle
 
 actor "Usuario" as User
-actor "Sistema" as System
 
 rectangle "Sistema de Estructuración de Obras Dramáticas" {
     ' Gestión de Usuarios
@@ -30,11 +29,8 @@ rectangle "Sistema de Estructuración de Obras Dramáticas" {
     usecase "Gestionar Personajes" as UC12
     usecase "Gestionar Locaciones" as UC13
     usecase "Gestionar Ideas" as UC14
-
-    ' Casos de uso internos
-    usecase "Generar ID Único" as UC15
-    usecase "Validar Datos" as UC16
-    usecase "Autenticar Usuario" as UC17
+    usecase "Gestionar Actos" as UC15
+    usecase "Gestionar Secuencias" as UC16
 }
 
 ' Relaciones Usuario
@@ -52,20 +48,7 @@ User --> UC11
 User --> UC12
 User --> UC13
 User --> UC14
-
-' Relaciones Sistema
-System --> UC15
-System --> UC16
-System --> UC17
-
-' Include relationships
-UC1 ..> UC16 : <<include>>
-UC2 ..> UC17 : <<include>>
-UC5 ..> UC15 : <<include>>
-UC7 ..> UC16 : <<include>>
-UC9 ..> UC16 : <<include>>
-
-' Extend relationships
-UC8 <.. UC16 : <<extend>>
+User --> UC15
+User --> UC16
 
 @enduml
