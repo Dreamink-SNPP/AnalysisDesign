@@ -1,0 +1,46 @@
+@startuml Gestion_Actos_Secuencias
+title Diagrama de Casos de Uso - Gestión de Actos y Secuencias
+skin rose
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Usuario" as User
+
+rectangle "Módulo de Actos" {
+    usecase "Crear Acto" as UCA1
+    usecase "Listar Actos" as UCA2
+    usecase "Editar Acto" as UCA3
+    usecase "Eliminar Acto" as UCA4
+    usecase "Reordenar Actos" as UCA5
+}
+
+rectangle "Módulo de Secuencias" {
+    usecase "Crear Secuencia" as UCS1
+    usecase "Listar Secuencias" as UCS2
+    usecase "Editar Secuencia" as UCS3
+    usecase "Eliminar Secuencia" as UCS4
+    usecase "Reordenar Secuencias" as UCS5
+}
+
+' Relaciones Usuario con Actos
+User --> UCA1
+User --> UCA2
+User --> UCA3
+User --> UCA4
+User --> UCA5
+
+' Relaciones Usuario con Secuencias
+User --> UCS1
+User --> UCS2
+User --> UCS3
+User --> UCS4
+User --> UCS5
+
+' Nota: Crear Secuencia requiere que exista un Acto (restricción de negocio)
+note right of UCS1
+  Precondición: Debe existir
+  al menos un Acto
+end note
+
+@enduml
