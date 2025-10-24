@@ -1,0 +1,279 @@
+@startuml DiagramaClases_Dreamink
+title Diagrama de Clases - Dreamink Domain Model
+skin rose
+
+' ===== CONFIGURACIÓN =====
+skinparam classAttributeIconSize 0
+left to right direction
+
+' ===== CLASE USER =====
+class User {
+  - id: Integer
+  - email_address: String {unique, required}
+  - password_digest: String {required}
+  - created_at: DateTime
+  - updated_at: DateTime
+  __
+  + authenticate(password: String): Boolean
+  + email(): String
+}
+
+' ===== CLASE SESSION =====
+class Session {
+  - id: Integer
+  - user_id: Integer {required}
+  - ip_address: String
+  - user_agent: String
+  - created_at: DateTime
+  - updated_at: DateTime
+}
+
+' ===== CLASE PROJECT =====
+class Project {
+  - id: Integer
+  - user_id: Integer {required}
+  - title: String
+  - genre: String
+  - idea: Text
+  - logline: String
+  - storyline: Text
+  - short_synopsis: Text
+  - long_synopsis: Text
+  - world: Text
+  - characters_summary: Text
+  - story_engine: Text
+  - themes: Text
+  - tone: Text
+  - created_at: DateTime
+  - updated_at: DateTime
+  __
+  + acts_summary(): String
+  + sequences_summary(): String
+  + owned_by?(user: User): Boolean
+}
+
+' ===== CLASE ACT =====
+class Act {
+  - id: Integer
+  - project_id: Integer {required}
+  - title: String {required, max: 100}
+  - description: Text
+  - position: Integer {required, >= 0}
+  - created_at: DateTime
+  - updated_at: DateTime
+  __
+  + owned_by?(user: User): Boolean
+  - set_position(): void
+}
+
+' ===== CLASE SEQUENCE =====
+class Sequence {
+  - id: Integer
+  - act_id: Integer {required}
+  - title: String {required, max: 100}
+  - description: Text
+  - position: Integer {required, >= 0}
+  - created_at: DateTime
+  - updated_at: DateTime
+  __
+  + owned_by?(user: User): Boolean
+  - set_position(): void
+}
+
+' ===== CLASE SCENE =====
+class Scene {
+  - id: Integer
+  - sequence_id: Integer {required}
+  - title: String {required, max: 200}
+  - description: Text
+  - color: String {format: #RRGGBB}
+  - position: Integer {required, >= 0}
+  - created_at: DateTime
+  - updated_at: DateTime
+  __
+  + owned_by?(user: User): Boolean
+  - set_position(): void
+  - set_default_color(): void
+}
+
+' ===== CLASE CHARACTER =====
+class Character {
+  - id: Integer
+  - project_id: Integer {required}
+  - name: String {required, unique per project, max: 100}
+  - created_at: DateTime
+  - updated_at: DateTime
+  __
+  + owned_by?(user: User): Boolean
+  - create_default_traits(): void
+}
+
+' ===== CLASE CHARACTER INTERNAL TRAIT =====
+class CharacterInternalTrait {
+  - id: Integer
+  - character_id: Integer {required}
+  - skills: Text {max: 500}
+  - religion: String {max: 200}
+  - spirituality: Text {max: 500}
+  - identity: Text {max: 500}
+  - beliefs: Text
+  - mental_programs: Text {max: 500}
+  - ethics: Text {max: 500}
+  - sexuality: String {max: 200}
+  - main_motivation: Text {max: 500}
+  - friendship_relations: Text
+  - conversation_focus: Text {max: 500}
+  - self_awareness_level: String {max: 300}
+  - values_priorities: Text
+  - time_management: String {max: 300}
+  - artistic_inclinations: Text {max: 500}
+  - heroes_models: Text {max: 500}
+  - political_ideas: Text {max: 500}
+  - authority_relationship: String {max: 300}
+  - vices: Text {max: 500}
+  - temporal_location: String {max: 200}
+  - food_preferences: String {max: 300}
+  - habits: Text {max: 500}
+  - peculiarities: Text {max: 500}
+  - hobbies: Text {max: 500}
+  - charitable_activities: String {max: 300}
+  - created_at: DateTime
+  - updated_at: DateTime
+}
+
+' ===== CLASE CHARACTER EXTERNAL TRAIT =====
+class CharacterExternalTrait {
+  - id: Integer
+  - character_id: Integer {required}
+  - general_appearance: Text
+  - detailed_appearance: Text
+  - medical_history: Text {max: 500}
+  - family_structure: Text
+  - education: Text {max: 500}
+  - profession: String {max: 300}
+  - legal_situation: String {max: 300}
+  - economic_situation: String {max: 300}
+  - important_possessions: Text {max: 500}
+  - residence_type: String {max: 300}
+  - usual_location: String {max: 300}
+  - pets: String {max: 300}
+  - created_at: DateTime
+  - updated_at: DateTime
+}
+
+' ===== CLASE LOCATION =====
+class Location {
+  - id: Integer
+  - project_id: Integer {required}
+  - name: String {required, unique per project, max: 100}
+  - description: Text
+  - location_type: String {enum: interior|exterior}
+  - created_at: DateTime
+  - updated_at: DateTime
+  __
+  + interior?(): Boolean
+  + exterior?(): Boolean
+  + owned_by?(user: User): Boolean
+}
+
+' ===== CLASE SCENE LOCATION (Join Table) =====
+class SceneLocation {
+  - id: Integer
+  - scene_id: Integer {required}
+  - location_id: Integer {required, unique per scene}
+  - created_at: DateTime
+  - updated_at: DateTime
+}
+
+' ===== CLASE IDEA =====
+class Idea {
+  - id: Integer
+  - project_id: Integer {required}
+  - title: String {required, max: 100}
+  - description: Text {required}
+  - tags: Text
+  - created_at: DateTime
+  - updated_at: DateTime
+  __
+  + tag_list(): Array<String>
+  + tag_list=(tags: Array): void
+  + owned_by?(user: User): Boolean
+}
+
+' ===== RELACIONES =====
+
+' User relationships
+User "1" --> "*" Session : has many
+User "1" --> "*" Project : owns
+
+' Project relationships
+Project "1" --> "*" Act : contains
+Project "1" --> "*" Character : has
+Project "1" --> "*" Location : has
+Project "1" --> "*" Idea : collects
+
+' Structural hierarchy
+Act "1" --> "*" Sequence : organizes
+Sequence "1" --> "*" Scene : contains
+
+' Character composition
+Character "1" *-- "1" CharacterInternalTrait : has
+Character "1" *-- "1" CharacterExternalTrait : has
+
+' Scene-Location many-to-many
+Scene "1" --> "*" SceneLocation
+Location "1" --> "*" SceneLocation
+SceneLocation "*" --> "1" Scene
+SceneLocation "*" --> "1" Location
+
+' Derived relationships (navigable)
+Project "1" ..> "*" Sequence : (through acts)
+Project "1" ..> "*" Scene : (through sequences)
+Scene "*" ..> "*" Location : (through scene_locations)
+Scene "1" ..> "1" Act : (through sequence)
+Scene "1" ..> "1" Project : (through act)
+Sequence "1" ..> "1" Project : (through act)
+
+' ===== NOTAS =====
+note right of Project
+  **Reglas de Negocio:**
+  - Cada usuario solo puede
+    ver sus propios proyectos
+  - No se pueden crear proyectos
+    con el mismo nombre (user scope)
+end note
+
+note right of Scene
+  **Position:** 
+  Auto-asignado secuencialmente
+  dentro de cada Sequence
+  
+  **Color:** 
+  Formato hexadecimal #RRGGBB
+  Default: #FFFFFF
+end note
+
+note bottom of Character
+  **Traits automáticos:**
+  Al crear un Character, se crean
+  automáticamente sus traits
+  (internal y external)
+end note
+
+note right of SceneLocation
+  **Tabla de Unión:**
+  Relación N:M entre
+  Scene y Location
+  
+  Unique: (scene_id, location_id)
+end note
+
+note top of Act
+  **Jerarquía de Estructura:**
+  Project -> Act -> Sequence -> Scene
+  
+  Cada nivel depende del anterior
+  y tiene position auto-asignado
+end note
+
+@enduml
