@@ -21,8 +21,6 @@ rectangle "Módulo de Tratamiento" {
     usecase "Definir Motor de Historia" as UCT11
     usecase "Establecer Temas" as UCT12
     usecase "Definir Tono" as UCT13
-    usecase "Estructurar Actos" as UCT14
-    usecase "Describir Secuencias" as UCT15
     usecase "Visualizar Tratamiento" as UCT16
 }
 
@@ -39,16 +37,9 @@ User --> UCT10
 User --> UCT11
 User --> UCT12
 User --> UCT13
-User --> UCT14
-User --> UCT15
 User --> UCT16
 
 ' Include relationships
 UCT1 ..> UCT2 : <<include>>
-UCT14 ..> UCT15 : <<include>>
-
-' Generalization
-UCT7 --|> UCT6
-UCT8 --|> UCT7
 
 @enduml
